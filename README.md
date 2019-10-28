@@ -10,13 +10,13 @@ docker build -t image_apache .
 
 #run docker, change <container name> to your own name, <local/path/to/file> to your own path where the assets are located
 docker run -tid -p 4000:80 --name=<container name> -v <local/path/to/file>:/var/www/html image_apache
-
+```
 
 
 ## Log
 Here is a sample run ...
 
-```sh
+```bash
 docker build -t image_apache .
 Sending build context to Docker daemon   2.56kB
 Step 1/9 : FROM centos:7
