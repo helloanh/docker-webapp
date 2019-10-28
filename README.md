@@ -37,9 +37,8 @@ Resolving Dependencies
 
 ... [omitted from log]
 
-(base) ➜  docker-webapp pwd
-(base) ➜  docker-webapp docker run -tid -p 4000:80 --name=container_apache -v /Users/anhkimhoang/Documents/GitHub/docker-webapp:/var/www/html image_apache
-935dfe254e171dc5fb9287d7f964ff05a4040459936c9a7855fb7861333fd9c1
-
-# now go to localhost:4000
+#new image with port 4040
+base) ➜  docker-webapp git:(master) ✗ docker run -tid -p 4040:80 --name=centos7test -v /Users/anhkimhoang/Documents/GitHub/docker-webapp/centos7-apache/var/www/html/:/var/www/html image_apache
+ccd845af7f4841a1aa24a9cccbd4809c6f517fa6c6df98b9fcc7076d9c9cb947
+(base) ➜  docker-webapp git:(master) ✗
 ```

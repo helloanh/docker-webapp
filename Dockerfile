@@ -9,12 +9,18 @@ RUN rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.
  && rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
 
 # Install PHP
-RUN yum -y install php72w php72w-bcmath php72w-cli php72w-common php72w-gd php72w-intl php72w-ldap php72w-mbstring \
-    php72w-mysql php72w-pear php72w-soap php72w-xml php72w-xmlrpc
+RUN yum --enablerepo=remi-php73 -y install php php-bcmath php-cli php-common php-gd php-intl php-ldap php-mbstring \
+    php-mysqlnd php-pear php-soap php-xml php-xmlrpc php-zip
 
 # Update Apache Configuration
 RUN sed -E -i -e '/<Directory "\/var\/www\/html">/,/<\/Directory>/s/AllowOverride None/AllowOverride All/' /etc/httpd/conf/httpd.conf
 RUN sed -E -i -e 's/DirectoryIndex (.*)$/DirectoryIndex index.php \1/g' /etc/httpd/conf/httpd.conf
+
+# Update Php Settings
+RUN sed -E -i -e 's/max_execution_time = 30/max_execution_time = 120/' /etc/php.ini \
+ && sed -E -i -e 's/memory_limit = 128M/memory_limit = 512M/' /etc/php.ini \
+ && sed -E -i -e 's/post_max_size = 8M/post_max_size = 64M/' /etc/php.ini \
+ && sed -E -i -e 's/upload_max_filesize = 2M/upload_max_filesize = 64M/' /etc/php.ini
 
 # Update FreeTDS Configuration - for support of Microsoft SQL server databases
 RUN sed -E -i -e 's/;([\t ]+)tds version = 4.2/ \1tds version = 7.1/' /etc/freetds.conf
